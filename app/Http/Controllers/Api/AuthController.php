@@ -73,6 +73,17 @@ class AuthController extends Controller
 
     public function logout()
     {
+        try {
+            Auth::user()->tokens()->delete();
 
+            return response()->json([
+                'message' => 'You have successfully logged out.',
+            ], 200);
+        } catch (\Exception $e) {
+            return response()->json([
+                'message' => 'Failed to logout user',
+                'error' => $e->getMessage(),
+            ], 500);
+        }
     }
 }
