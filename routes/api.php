@@ -18,10 +18,10 @@ Route::prefix('/')->middleware('auth:sanctum')->group(function () {
         Route::get('/{id}', [NoteController::class, 'show'])->name('show');
         Route::put('/{id}', [NoteController::class, 'update'])->name('update');
         Route::delete('/{id}', [NoteController::class, 'destroy'])->name('destroy');
-        Route::put('/{id}/restore', [NoteController::class, 'restore'])->name('restore');
+        Route::patch('/{id}/restore', [NoteController::class, 'restore'])->name('restore');
         Route::delete('/{id}/force-delete', [NoteController::class, 'forceDelete'])->name('force-delete');
-        Route::put('/{id}/archive', [NoteController::class, 'archive'])->name('archive');
-        Route::put('/{id}/unarchive', [NoteController::class, 'unArchive'])->name('unarchive');
+        Route::patch('/{id}/archive', [NoteController::class, 'archive'])->name('archive');
+        Route::patch('/{id}/unarchive', [NoteController::class, 'unArchive'])->name('unarchive');
     });
 
     Route::get('/user', function (Request $request) {
