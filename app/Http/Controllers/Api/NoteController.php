@@ -69,6 +69,10 @@ class NoteController extends Controller
             $note = auth()->user()->notes()->findOrFail($id);
 
             return new NoteResource($note);
+        } catch (ModelNotFoundException $e) {
+            return response()->json([
+                'message' => 'Note not found.'
+            ], 404);
         } catch (\Exception $e) {
             return response()->json([
                 'message' => $e->getMessage()
