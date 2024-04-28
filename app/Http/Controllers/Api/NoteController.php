@@ -153,6 +153,30 @@ class NoteController extends Controller
     }
 
     /**
+     * Force delete the specified resource from storage.
+     */
+    public function forceDelete(string $id)
+    {
+        try {
+            $note = auth()->user()->notes()->onlyTrashed()->findOrFail($id);
+
+            $note->forceDelete();
+
+            return response()->json([
+                'message' => 'Note deleted permanently.'
+            ]);
+        } catch (ModelNotFoundException $e) {
+            return response()->json([
+                'message' => 'Note not found.'
+            ], 404);
+        } catch (\Exception $e) {
+            return response()->json([
+                'message' => $e->getMessage()
+            ], 500);
+        }
+    }
+
+    /**
      * Archive the specified resource from storage.
      */
     public function archive(string $id)
