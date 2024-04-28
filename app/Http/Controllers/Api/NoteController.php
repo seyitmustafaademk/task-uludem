@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Note\StoreRequest;
 use App\Http\Resources\Note\NoteResourceCollection;
 use Illuminate\Http\Request;
 
@@ -27,9 +28,23 @@ class NoteController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(StoreRequest $request)
     {
-        //
+        try {
+            $note = auth()->user()->notes()->create([
+                'title' => $request->get('title'),
+                'content' => $request->get('content')
+            ]);
+
+            return response()->json([
+                'message' => 'Note created successfully.',
+                'data' => $note
+            ], 201);
+        } catch (\Exception $e) {
+            return response()->json([
+                'message' => $e->getMessage()
+            ], 500);
+        }
     }
 
     /**
