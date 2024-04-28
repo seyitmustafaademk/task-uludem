@@ -46,7 +46,7 @@ return [
     |
     */
 
-    'expiration' => null,
+    'expiration' => 60 * 24 * env('SANCTUM_TOKEN_LIFETIME', 3),
 
     /*
     |--------------------------------------------------------------------------
