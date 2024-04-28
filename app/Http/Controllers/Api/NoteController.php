@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Note\StoreRequest;
+use App\Http\Resources\Note\NoteResource;
 use App\Http\Resources\Note\NoteResourceCollection;
 use Illuminate\Http\Request;
 
@@ -52,7 +53,15 @@ class NoteController extends Controller
      */
     public function show(string $id)
     {
-        //
+        try {
+            $note = auth()->user()->notes()->findOrFail($id);
+
+            return new NoteResource($note);
+        } catch (\Exception $e) {
+            return response()->json([
+                'message' => $e->getMessage()
+            ], 404);
+        }
     }
 
     /**
