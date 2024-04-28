@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests\Auth;
 
+use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
 
 class RegisterRequest extends FormRequest
@@ -22,11 +23,11 @@ class RegisterRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'firstname' => ['required', 'string', 'max:50'],
-            'lastname' => ['required', 'string', 'max:50'],
-            'username' => ['required', 'string', 'max:30', 'unique:users'],
-            'email' => ['required', 'string', 'email', 'max:100', 'unique:users'],
-            'password' => ['required', 'string', 'min:8', 'confirmed'],
+            'firstname' => 'required|string|max:50',
+            'lastname' => 'nullable|string|max:50',
+            'username' => 'required|string|max:30|unique:users',
+            'email' => 'required|string|email|max:100|unique:users',
+            'password' => 'required|string|min:8|confirmed',
         ];
     }
 
@@ -60,29 +61,13 @@ class RegisterRequest extends FormRequest
         ];
     }
 
-    /**
-     * Handle a failed validation attempt.
-     *
-     * @param  \Illuminate\Contracts\Validation\Validator  $validator
-     */
-    public function failedValidation(\Illuminate\Contracts\Validation\Validator $validator)
+    protected function failedValidation(Validator $validator)
     {
-        return response()->json([
-            'status' => 'error',
+        $response = response()->json([
             'message' => 'The given data was invalid.',
-            'errors' => $validator->errors()->toArray(),
+            'errors' => $validator->errors(),
         ], 422);
-    }
 
-    /**
-     * Handle a failed authorization attempt.
-     * @throws HttpResponseException
-     */
-    public function failedAuthorization()
-    {
-        return response()->json([
-            'status' => 'error',
-            'message' => 'You do not have permission to perform this action',
-        ], 403);
+        throw new \Illuminate\Validation\ValidationException($validator, $response);
     }
 }
