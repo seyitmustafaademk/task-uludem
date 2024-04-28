@@ -129,6 +129,30 @@ class NoteController extends Controller
     }
 
     /**
+     * Restore the specified resource from storage.
+     */
+    public function restore(string $id)
+    {
+        try {
+            $note = auth()->user()->notes()->onlyTrashed()->findOrFail($id);
+
+            $note->restore();
+
+            return response()->json([
+                'message' => 'Note restored successfully.'
+            ]);
+        } catch (ModelNotFoundException $e) {
+            return response()->json([
+                'message' => 'Note not found.'
+            ], 404);
+        } catch (\Exception $e) {
+            return response()->json([
+                'message' => $e->getMessage()
+            ], 500);
+        }
+    }
+
+    /**
      * Archive the specified resource from storage.
      */
     public function archive(string $id)
