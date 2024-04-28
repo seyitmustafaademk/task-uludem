@@ -16,6 +16,7 @@ Route::prefix('/')->middleware('auth:sanctum')->group(function () {
         Route::get('/', [NoteController::class, 'show'])->name('show');
         Route::post('/', [NoteController::class, 'show'])->name('show');
         Route::get('/{id}', [NoteController::class, 'show'])->name('show');
+        Route::put('/{id}', [NoteController::class, 'update'])->name('update');
     });
 
     Route::get('/user', function (Request $request) {

@@ -4,8 +4,10 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Note\StoreRequest;
+use App\Http\Requests\Note\UpdateRequest;
 use App\Http\Resources\Note\NoteResource;
 use App\Http\Resources\Note\NoteResourceCollection;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
 
 class NoteController extends Controller
@@ -67,9 +69,29 @@ class NoteController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(UpdateRequest $request, string $id)
     {
-        //
+        try {
+            $note = auth()->user()->notes()->findOrFail($id);
+
+            $note->update([
+                'title' => $request->get('title'),
+                'content' => $request->get('content')
+            ]);
+
+            return response()->json([
+                'message' => 'Note updated successfully.',
+                'data' => $note
+            ]);
+        } catch (ModelNotFoundException $e) {
+            return response()->json([
+                'message' => 'Note not found.'
+            ], 404);
+        } catch (\Exception $e) {
+            return response()->json([
+                'message' => $e->getMessage()
+            ], 404);
+        }
     }
 
     /**
