@@ -14,6 +14,7 @@ class Note extends Model
         'user_id',
         'title',
         'content',
+        'archived_at',
     ];
 
     public function user(): \Illuminate\Database\Eloquent\Relations\BelongsTo

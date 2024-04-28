@@ -117,4 +117,30 @@ class NoteController extends Controller
             ], 500);
         }
     }
+
+    /**
+     * Archive the specified resource from storage.
+     */
+    public function archive(string $id)
+    {
+        try {
+            $note = auth()->user()->notes()->findOrFail($id);
+
+            $note->update([
+                'archived_at' => now()
+            ]);
+
+            return response()->json([
+                'message' => 'Note archived successfully.'
+            ]);
+        } catch (ModelNotFoundException $e) {
+            return response()->json([
+                'message' => 'Note not found.'
+            ], 404);
+        } catch (\Exception $e) {
+            return response()->json([
+                'message' => $e->getMessage()
+            ], 500);
+        }
+    }
 }

@@ -13,11 +13,12 @@ Route::prefix('/')->middleware('auth:sanctum')->group(function () {
     });
 
     Route::prefix('/note')->name('notes.')->group(function () {
-        Route::get('/', [NoteController::class, 'show'])->name('show');
-        Route::post('/', [NoteController::class, 'show'])->name('show');
+        Route::get('/', [NoteController::class, 'index'])->name('index');
+        Route::post('/', [NoteController::class, 'store'])->name('store');
         Route::get('/{id}', [NoteController::class, 'show'])->name('show');
         Route::put('/{id}', [NoteController::class, 'update'])->name('update');
         Route::delete('/{id}', [NoteController::class, 'destroy'])->name('destroy');
+        Route::put('/{id}/archive', [NoteController::class, 'archive'])->name('archive');
     });
 
     Route::get('/user', function (Request $request) {
