@@ -19,6 +19,7 @@ Route::prefix('/')->middleware('auth:sanctum')->group(function () {
         Route::put('/{id}', [NoteController::class, 'update'])->name('update');
         Route::delete('/{id}', [NoteController::class, 'destroy'])->name('destroy');
         Route::put('/{id}/archive', [NoteController::class, 'archive'])->name('archive');
+        Route::put('/{id}/unarchive', [NoteController::class, 'unArchive'])->name('unarchive');
     });
 
     Route::get('/user', function (Request $request) {
