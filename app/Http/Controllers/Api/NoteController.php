@@ -99,6 +99,22 @@ class NoteController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        try {
+            $note = auth()->user()->notes()->findOrFail($id);
+
+            $note->delete();
+
+            return response()->json([
+                'message' => 'Note deleted successfully.'
+            ]);
+        } catch (ModelNotFoundException $e) {
+            return response()->json([
+                'message' => 'Note not found.'
+            ], 404);
+        } catch (\Exception $e) {
+            return response()->json([
+                'message' => $e->getMessage()
+            ], 500);
+        }
     }
 }
