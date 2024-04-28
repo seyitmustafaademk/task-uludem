@@ -8,7 +8,6 @@ use App\Http\Requests\Note\UpdateRequest;
 use App\Http\Resources\Note\NoteResource;
 use App\Http\Resources\Note\NoteResourceCollection;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
-use Illuminate\Http\Request;
 
 class NoteController extends Controller
 {
@@ -20,7 +19,8 @@ class NoteController extends Controller
         try {
             $notes = auth()->user()->notes()
                 ->when(request()->filled('search'), function ($query) {
-                    $query->where('title', 'like', '%' . request()->query('search') . '%');
+                    $query->where('title', 'like', '%' . request()->query('search') . '%')
+                        ->orWhere('content', 'like', '%' . request()->query('search') . '%');
                 })
                 ->when(request()->filled('archive'), function ($query) {
                     $query->whereNotNull('archived_at');
