@@ -74,6 +74,11 @@ class AuthController extends Controller
     public function logout()
     {
         try {
+            if (!Auth::user())
+                return response()->json([
+                    'message' => 'You are not logged in.',
+                ], 401);
+
             Auth::user()->tokens()->delete();
 
             return response()->json([
