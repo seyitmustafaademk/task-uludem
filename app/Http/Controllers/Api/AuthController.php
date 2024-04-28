@@ -3,9 +3,11 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Auth\LoginRequest;
 use App\Http\Requests\Auth\RegisterRequest;
 use App\Models\User;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 
 class AuthController extends Controller
@@ -39,9 +41,34 @@ class AuthController extends Controller
         }
     }
 
-    public function login()
+    public function login(LoginRequest $request)
     {
+        try {
+            $user = User::where('email', $request->username)
+                ->orWhere('username', $request->username)
+                ->first();
 
+            if (!$user || !Hash::check($request->password, $user->password)) {
+                return response()->json([
+                    'message' => 'Invalid username or password. Please try again.',
+                ], 401);
+            }
+
+            $token = $user->createToken('auth_token')->plainTextToken;
+
+            return response()->json([
+                'message' => 'You have successfully logged in.',
+                'token' => $token,
+                'token_type' => 'Bearer',
+                'expires_at' => $user->tokens()->first()->created_at->addMinutes(config('sanctum.expiration')),
+                'user' => $user,
+            ], 200);
+        } catch (\Exception $e) {
+            return response()->json([
+                'message' => 'Failed to login user',
+                'error' => $e->getMessage(),
+            ], 500);
+        }
     }
 
     public function logout()
