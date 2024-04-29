@@ -1,0 +1,473 @@
+{
+	"info": {
+		"_postman_id": "d6ee3f50-4f20-4b58-9cf3-0f854669626e",
+		"name": "ULUDEM TASK",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "28877506"
+	},
+	"item": [
+		{
+			"name": "Auth",
+			"item": [
+				{
+					"name": "Register",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "firstname",
+									"value": "Seyit Mustafa Adem",
+									"description": "required|string|max:50",
+									"type": "text"
+								},
+								{
+									"key": "lastname",
+									"value": "Kandemir",
+									"description": "nullable|string|max:50",
+									"type": "text"
+								},
+								{
+									"key": "username",
+									"value": "seyitmustafaademkk",
+									"description": "required|string|max:30|unique:users",
+									"type": "text"
+								},
+								{
+									"key": "email",
+									"value": "seyitmustafaademkk@gmail.com",
+									"description": "required|string|email|max:100|unique:users",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "Deneme123!",
+									"description": "required|string|min:8|confirmed",
+									"type": "text"
+								},
+								{
+									"key": "password_confirmation",
+									"value": "Deneme123!",
+									"description": "required|string|min:8|confirmed",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{LOCALHOST}}/auth/register",
+							"host": [
+								"{{LOCALHOST}}"
+							],
+							"path": [
+								"auth",
+								"register"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Login",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "username",
+									"value": "seyitmustafaademkk",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "Deneme123!",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{LOCALHOST}}/auth/login",
+							"host": [
+								"{{LOCALHOST}}"
+							],
+							"path": [
+								"auth",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Logout",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "1|fIxrWoqYWVnIDRaClvzxcHmOm2Yv5M4y25jRkeLqbc71f395",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{LOCALHOST}}/auth/logout",
+							"host": [
+								"{{LOCALHOST}}"
+							],
+							"path": [
+								"auth",
+								"logout"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Note",
+			"item": [
+				{
+					"name": "Index",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "2|DAweEaBLOalpmfcBeVPv8MBZlcoH3uhiFlQNkFnr0f8d21d8",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{LOCALHOST}}/note",
+							"host": [
+								"{{LOCALHOST}}"
+							],
+							"path": [
+								"note"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Store",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "2|DAweEaBLOalpmfcBeVPv8MBZlcoH3uhiFlQNkFnr0f8d21d8",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "title",
+									"value": "Bu bir test title",
+									"type": "text"
+								},
+								{
+									"key": "content",
+									"value": "Bu bir test content",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{LOCALHOST}}/note",
+							"host": [
+								"{{LOCALHOST}}"
+							],
+							"path": [
+								"note"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Show",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "2|DAweEaBLOalpmfcBeVPv8MBZlcoH3uhiFlQNkFnr0f8d21d8",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{LOCALHOST}}/note/102",
+							"host": [
+								"{{LOCALHOST}}"
+							],
+							"path": [
+								"note",
+								"102"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "2|DAweEaBLOalpmfcBeVPv8MBZlcoH3uhiFlQNkFnr0f8d21d8",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "title",
+									"value": "Test",
+									"type": "text"
+								},
+								{
+									"key": "content",
+									"value": "test",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{LOCALHOST}}/note/101",
+							"host": [
+								"{{LOCALHOST}}"
+							],
+							"path": [
+								"note",
+								"101"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Destroy",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "2|DAweEaBLOalpmfcBeVPv8MBZlcoH3uhiFlQNkFnr0f8d21d8",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{LOCALHOST}}/note/102",
+							"host": [
+								"{{LOCALHOST}}"
+							],
+							"path": [
+								"note",
+								"102"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Restore",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "2|DAweEaBLOalpmfcBeVPv8MBZlcoH3uhiFlQNkFnr0f8d21d8",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PATCH",
+						"header": [],
+						"url": {
+							"raw": "{{LOCALHOST}}/note/101/restore",
+							"host": [
+								"{{LOCALHOST}}"
+							],
+							"path": [
+								"note",
+								"101",
+								"restore"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Force Delete",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "2|DAweEaBLOalpmfcBeVPv8MBZlcoH3uhiFlQNkFnr0f8d21d8",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{LOCALHOST}}/note/102/force-delete",
+							"host": [
+								"{{LOCALHOST}}"
+							],
+							"path": [
+								"note",
+								"102",
+								"force-delete"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Archive",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "2|DAweEaBLOalpmfcBeVPv8MBZlcoH3uhiFlQNkFnr0f8d21d8",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PATCH",
+						"header": [],
+						"url": {
+							"raw": "{{LOCALHOST}}/note/102/archive",
+							"host": [
+								"{{LOCALHOST}}"
+							],
+							"path": [
+								"note",
+								"102",
+								"archive"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Unarchive",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "2|DAweEaBLOalpmfcBeVPv8MBZlcoH3uhiFlQNkFnr0f8d21d8",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PATCH",
+						"header": [],
+						"url": {
+							"raw": "{{LOCALHOST}}/note/101/archive",
+							"host": [
+								"{{LOCALHOST}}"
+							],
+							"path": [
+								"note",
+								"101",
+								"archive"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "LOCALHOST",
+			"value": "http://127.0.0.1:8000/api",
+			"type": "string"
+		},
+		{
+			"key": "LOCALHOST_WİTHOUT_APİ",
+			"value": "http://127.0.0.1:8000",
+			"type": "string"
+		}
+	]
+}
